@@ -12,7 +12,7 @@ const Query = new GraphQLObjectType({
       type: new GraphQLList(SongType),
 
       resolve() {
-        return axios.get('http://localhost:3000/songs');
+        return axios.get('http://localhost:3000/songs').then(res => res.data);
       },
     },
   },

@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
     "jsonserver": "json-server --watch db.json"
   },
   "keywords": [],
-  "author": "Alan Aliaga <alanaliagadev@gmail.com> (https://twitter.com/allen4dev)",
+  "author":
+    "Alan Aliaga <alanaliagadev@gmail.com> (https://twitter.com/allen4dev)",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.17.1",

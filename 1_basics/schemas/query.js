@@ -35,6 +35,17 @@ const query = new GraphQLObjectType({
         return axios.get('http://localhost:3000/lyrics').then(res => res.data);
       },
     },
+
+    getSongLyrics: {
+      type: new GraphQLList(LyricType),
+      args: { id: { type: GraphQLInt } },
+
+      resolve(parentValue, { id }) {
+        return axios
+          .get(`http://localhost:3000/songs/${id}/lyrics`)
+          .then(res => res.data);
+      },
+    },
   },
 });
 

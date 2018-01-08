@@ -1,0 +1,19 @@
+{
+  "name": "1_basics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "jsonserver": "json-server --watch db.json"
+  },
+  "keywords": [],
+  "author":
+    "Alan Aliaga <alanaliagadev@gmail.com> (https://twitter.com/allen4dev)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "json-server": "^0.12.1",
+    "nodemon": "^1.14.9"
+  }
+}

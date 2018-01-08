@@ -4,11 +4,22 @@ const axios = require('axios');
 const SongType = require('./SongType');
 const LyricType = require('./LyricType');
 
-const { GraphQLObjectType, GraphQLList } = graphql;
+const { GraphQLObjectType, GraphQLList, GraphQLInt } = graphql;
 
 const Query = new GraphQLObjectType({
   name: 'Query',
   fields: {
+    getSong: {
+      type: SongType,
+      args: { id: { type: GraphQLInt } },
+
+      resolve(parentValue, { id }) {
+        return axios
+          .get(`http://localhost:3000/songs/${id}`)
+          .then(res => res.data);
+      },
+    },
+
     songs: {
       type: new GraphQLList(SongType),
 

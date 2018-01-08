@@ -1,17 +1,17 @@
 const graphql = require('graphql');
 const axios = require('axios');
 
-const SongType = require('./SongType');
+// const SongType = require('./SongType');
 
 const { GraphQLObjectType, GraphQLInt, GraphQLString } = graphql;
 
 const LyricType = new GraphQLObjectType({
   name: 'LyricType',
-  fields: {
+  fields: () => ({
     id: { type: GraphQLInt },
     content: { type: GraphQLString },
     song: {
-      type: SongType,
+      type: require('./SongType'),
 
       resolve(parentValue) {
         return axios
@@ -19,7 +19,7 @@ const LyricType = new GraphQLObjectType({
           .then(res => res.data);
       },
     },
-  },
+  }),
 });
 
 module.exports = LyricType;

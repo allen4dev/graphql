@@ -6,7 +6,7 @@ const LyricType = require('./LyricType');
 
 const { GraphQLObjectType, GraphQLList, GraphQLInt } = graphql;
 
-const Query = new GraphQLObjectType({
+const query = new GraphQLObjectType({
   name: 'Query',
   fields: {
     getSong: {
@@ -38,4 +38,4 @@ const Query = new GraphQLObjectType({
   },
 });
 
-module.exports = Query;
+module.exports = query;

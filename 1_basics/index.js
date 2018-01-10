@@ -12,7 +12,7 @@ app.use(
   expressGraphQL({
     schema,
     graphiql: true,
-  }),
+  })
 );
 
 server.listen(8080, () => console.log('Server running in port 8080'));

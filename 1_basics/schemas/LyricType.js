@@ -1,8 +1,6 @@
 const graphql = require('graphql');
 const axios = require('axios');
 
-// const SongType = require('./SongType');
-
 const { GraphQLObjectType, GraphQLInt, GraphQLString } = graphql;
 
 const LyricType = new GraphQLObjectType({

@@ -1,14 +1,15 @@
 const axios = require('axios');
 const { makeExecutableSchema } = require('graphql-tools');
 
-const Song = require('./Song');
 const Lyric = require('./Lyric');
 
 const RootQuery = require('./query');
+const Mutation = require('./mutation');
 
 const SchemaDefinition = `
   schema {
     query: RootQuery
+    mutation: Mutation
   }
 `;
 
@@ -38,10 +39,24 @@ const resolvers = {
         .then(res => res.data);
     },
   },
+
+  Mutation: {
+    addSong: (parentValue, { name }) => {
+      return axios
+        .post(`http://localhost:3000/songs`, { name })
+        .then(res => res.data);
+    },
+
+    addLyric: (parentValue, { content, songId }) => {
+      return axios
+        .post(`http://localhost:3000/lyrics`, { content, songId })
+        .then(res => res.data);
+    },
+  },
 };
 
 const schema = makeExecutableSchema({
-  typeDefs: [SchemaDefinition, RootQuery, ...Lyric],
+  typeDefs: [SchemaDefinition, RootQuery, Mutation, ...Lyric],
   resolvers,
 });
 

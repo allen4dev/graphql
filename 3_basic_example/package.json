@@ -1,0 +1,23 @@
+{
+  "name": "3_basic_example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "jsonserver": "json-server db.json"
+  },
+  "keywords": [],
+  "author": "Alan Aliaga <alanaliaga23@gmail.com> (https://twitter.com/kurocode)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-graphql": "^0.6.11",
+    "graphql": "^0.12.3",
+    "graphql-tools": "^2.18.0",
+    "json-server": "^0.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.10"
+  }
+}

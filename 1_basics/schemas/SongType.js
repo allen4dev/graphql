@@ -1,5 +1,4 @@
 const graphql = require('graphql');
-const axios = require('axios');
 
 const LyricType = require('./LyricType');
 
@@ -29,4 +28,4 @@ const SongType = `
 //   }),
 // });
 
-module.exports = [SongType, LyricType];
+module.exports = () => [SongType, LyricType];

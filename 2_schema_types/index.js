@@ -9,6 +9,7 @@ const typeDefs = `
   type Song {
     id: Int
     name: String
+    lyrics: [Lyric]!
   }
 
   type Lyric {
@@ -39,6 +40,14 @@ const resolvers = {
     getSongLyrics: (parentValue, { id }) => {
       return axios
         .get(`http://localhost:3000/songs/${id}/lyrics`)
+        .then(res => res.data);
+    },
+  },
+
+  Song: {
+    lyrics: parentValue => {
+      return axios
+        .get(`http://localhost:3000/songs/${parentValue.id}/lyrics`)
         .then(res => res.data);
     },
   },

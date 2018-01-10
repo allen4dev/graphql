@@ -1,15 +1,20 @@
+const axios = require('axios');
 const { makeExecutableSchema } = require('graphql-tools');
+
+const Artist = require('./types/Artist');
 
 const RootQuery = `
   type RootQuery {
-    getDummieText(text: String!): String
+    getArtist(id: Int!): Artist
   }
 `;
 
 const resolvers = {
   RootQuery: {
-    getDummieText: (parentValue, { text }) => {
-      return text;
+    getArtist: (_, { id }) => {
+      return axios
+        .get(`http://localhost:3000/artists/${id}`)
+        .then(res => res.data);
     },
   },
 };
@@ -21,7 +26,7 @@ const SchemaDefinition = `
 `;
 
 const schema = makeExecutableSchema({
-  typeDefs: [SchemaDefinition, RootQuery],
+  typeDefs: [SchemaDefinition, RootQuery, Artist],
   resolvers,
 });
 

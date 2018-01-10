@@ -1,7 +1,30 @@
 {
-  "artists": [],
-  "albums": [],
-  "songs": [],
-  "playlists": [],
-  "concerts": []
+  "artists": [
+    {
+      "id": 1,
+      "name": "Artist Name",
+      "description": "Artist Name is a random artist"
+    }
+  ],
+  "albums": [
+    {
+      "id": 1,
+      "name": "Artist 1 album",
+      "artistId": 1,
+      "playlistIds": [4, 5, 6]
+    }
+  ],
+  "songs": [
+    {
+      "id": 1,
+      "artistId": 1
+    }
+  ],
+  "playlists": [
+    {
+      "id": 1,
+      "name": "Playlist name",
+      "songIds": [1, 2, 3]
+    }
+  ]
 }

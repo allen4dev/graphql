@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require('./../utils/axios');
 const { makeExecutableSchema } = require('graphql-tools');
 
 const Artist = require('./types/Artist');
@@ -14,21 +14,15 @@ const RootQuery = `
 const resolvers = {
   RootQuery: {
     getArtist: (_, { id }) => {
-      return axios
-        .get(`http://localhost:3000/artists/${id}`)
-        .then(res => res.data);
+      return axios.get(`/artists/${id}`).then(res => res.data);
     },
     getAlbum: (_, { id }) => {
-      return axios
-        .get(`http://localhost:3000/albums/${id}`)
-        .then(res => res.data);
+      return axios.get(`/albums/${id}`).then(res => res.data);
     },
   },
   Album: {
     artist: parentValue => {
-      return axios
-        .get(`http://localhost:3000/artists/${parentValue.artistId}`)
-        .then(res => res.data);
+      return axios.get(`artists/${parentValue.artistId}`).then(res => res.data);
     },
   },
 };

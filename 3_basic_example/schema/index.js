@@ -9,8 +9,13 @@ const Playlist = require('./types/Playlist');
 const RootQuery = `
   type RootQuery {
     getArtist(id: Int!): Artist
+    getArtistAlbums(id: Int!): [Album]!
+    getArtistSongs(id: Int!): [Song]!
+
     getAlbum(id: Int!): Album
+
     getSong(id: Int): Song
+
     getPlaylist(id: Int): Playlist
   }
 `;
@@ -28,10 +33,12 @@ const Mutation = `
     createAlbum(name: String!, artistId: Int!, songIds: [Int] = []): Album
     updateAlbum(id: Int!, name: String!): Album
     deleteAlbum(id: Int!): Album
+    addAlbumSong(id: Int!, songId: Int!): Album
 
     createPlaylist(name: String!, songIds: [Int] = []): Playlist
     updatePlaylist(id: Int!, name: String!): Playlist
     deletePlaylist(id: Int!): Playlist
+    addPlaylistSong(id: Int!, songId: Int!): Playlist
   }
 `;
 
@@ -40,6 +47,13 @@ const resolvers = {
     getArtist: (_, { id }) => {
       return axios.get(`/artists/${id}`).then(res => res.data);
     },
+    getArtistAlbums: (_, { id }) => {
+      return axios.get(`/artists/${id}/albums`).then(res => res.data);
+    },
+    getArtistSongs: (_, { id }) => {
+      return axios.get(`/artists/${id}/songs`).then(res => res.data);
+    },
+
     getAlbum: (_, { id }) => {
       return axios.get(`/albums/${id}`).then(res => res.data);
     },
@@ -92,6 +106,22 @@ const resolvers = {
         .then(res => res.data)
         .then(deleted => axios.delete(`/albums/${id}`).then(() => deleted));
     },
+    addAlbumSong: (_, { id, songId }) => {
+      return axios
+        .get(`/albums/${id}`)
+        .then(res => res.data)
+        .then(album => {
+          const exists = album.songIds.indexOf(songId);
+
+          if (exists !== -1) return album;
+
+          return axios
+            .patch(`/albums/${id}`, {
+              songIds: [...album.songIds, songId],
+            })
+            .then(res => res.data);
+        });
+    },
 
     createPlaylist: (_, args) => {
       return axios.post('/playlists', args).then(res => res.data);
@@ -104,6 +134,22 @@ const resolvers = {
         .get(`/playlists/${id}`)
         .then(res => res.data)
         .then(deleted => axios.delete(`/playlists/${id}`).then(() => deleted));
+    },
+    addPlaylistSong: (_, { id, songId }) => {
+      return axios
+        .get(`/playlists/${id}`)
+        .then(res => res.data)
+        .then(playlist => {
+          const exists = playlist.songIds.indexOf(songId);
+
+          if (exists !== -1) return playlist;
+
+          return axios
+            .patch(`/playlists/${id}`, {
+              songIds: [...playlist.songIds, songId],
+            })
+            .then(res => res.data);
+        });
     },
   },
 

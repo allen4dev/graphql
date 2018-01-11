@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "jsonserver": "json-server db.json"
+    "jsonserver": "json-server --watch db.json"
   },
   "keywords": [],
-  "author": "Alan Aliaga <alanaliaga23@gmail.com> (https://twitter.com/kurocode)",
+  "author":
+    "Alan Aliaga <alanaliaga23@gmail.com> (https://twitter.com/kurocode)",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.17.1",

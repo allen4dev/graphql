@@ -9,6 +9,5 @@ const Album = `
     songs: [Album]!
   }
 `;
-// "songIds": [4, 5, 6]
 
 module.exports = [Album, Artist, ...Song];

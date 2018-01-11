@@ -18,8 +18,20 @@ const RootQuery = `
 const Mutation = `
   type Mutation {
     createArtist(name: String!, description: String!): Artist
+    updateArtist(id: Int!, name: String, description: String): Artist
+    deleteArtist(id: Int!): Artist
+
     createSong(name: String!, artistId: Int!): Song
+    updateSong(id: Int!, name: String!): Song
+    deleteSong(id: Int!): Song
+
     createAlbum(name: String!, artistId: Int!, songIds: [Int] = []): Album
+    updateAlbum(id: Int!, name: String!): Album
+    deleteAlbum(id: Int!): Album
+
+    createPlaylist(name: String!, songIds: [Int] = []): Playlist
+    updatePlaylist(id: Int!, name: String!): Playlist
+    deletePlaylist(id: Int!): Playlist
   }
 `;
 
@@ -45,13 +57,53 @@ const resolvers = {
     createArtist: (_, args) => {
       return axios.post('/artists', args).then(res => res.data);
     },
+    updateArtist: (_, { id, ...rest }) => {
+      return axios.patch(`/artists/${id}`, { ...rest }).then(res => res.data);
+    },
+    deleteArtist: (_, { id }) => {
+      return axios
+        .get(`/artists/${id}`)
+        .then(res => res.data)
+        .then(deleted => axios.delete(`/artists/${id}`).then(() => deleted));
+    },
 
     createSong: (_, args) => {
       return axios.post('/songs', args).then(res => res.data);
     },
+    updateSong: (_, { id, name }) => {
+      return axios.patch(`/songs/${id}`, { name }).then(res => res.data);
+    },
+    deleteSong: (_, { id }) => {
+      return axios
+        .get(`/songs/${id}`)
+        .then(res => res.data)
+        .then(deleted => axios.delete(`/songs/${id}`).then(() => deleted));
+    },
 
     createAlbum: (_, args) => {
       return axios.post('/albums', args).then(res => res.data);
+    },
+    updateAlbum: (_, { id, name }) => {
+      return axios.patch(`/albums/${id}`, { name }).then(res => res.data);
+    },
+    deleteAlbum: (_, { id }) => {
+      return axios
+        .get(`/albums/${id}`)
+        .then(res => res.data)
+        .then(deleted => axios.delete(`/albums/${id}`).then(() => deleted));
+    },
+
+    createPlaylist: (_, args) => {
+      return axios.post('/playlists', args).then(res => res.data);
+    },
+    updatePlaylist: (_, { id, name }) => {
+      return axios.patch(`/playlists/${id}`, { name }).then(res => res.data);
+    },
+    deletePlaylist: (_, { id }) => {
+      return axios
+        .get(`/playlists/${id}`)
+        .then(res => res.data)
+        .then(deleted => axios.delete(`/playlists/${id}`).then(() => deleted));
     },
   },
 
@@ -63,9 +115,6 @@ const resolvers = {
     },
 
     songs: parentValue => {
-      // ToDo: a separate module or service should take care of this
-      if (parentValue.songs.length === 0) return null;
-
       const promises = parentValue.songIds.map(id =>
         axios.get(`/songs/${id}`).then(res => res.data)
       );
@@ -84,9 +133,6 @@ const resolvers = {
 
   Playlist: {
     songs: parentValue => {
-      // ToDo: a separate module or service should take care of this
-      if (parentValue.songs.length === 0) return null;
-
       const promises = parentValue.songIds.map(id =>
         axios.get(`/songs/${id}`).then(res => res.data)
       );

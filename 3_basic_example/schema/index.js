@@ -18,6 +18,7 @@ const RootQuery = `
 const Mutation = `
   type Mutation {
     createArtist(name: String!, description: String!): Artist
+    createSong(name: String!, artistId: Int!): Song
   }
 `;
 
@@ -42,6 +43,10 @@ const resolvers = {
   Mutation: {
     createArtist: (_, args) => {
       return axios.post('/artists', args).then(res => res.data);
+    },
+
+    createSong: (_, args) => {
+      return axios.post('/songs', args).then(res => res.data);
     },
   },
 

@@ -32,11 +32,20 @@ const resolvers = {
       return axios.get(`/playlists/${id}`).then(res => res.data);
     },
   },
+
   Album: {
     artist: parentValue => {
       return axios
         .get(`/artists/${parentValue.artistId}`)
         .then(res => res.data);
+    },
+
+    songs: parentValue => {
+      const promises = parentValue.songIds.map(id =>
+        axios.get(`/songs/${id}`).then(res => res.data)
+      );
+
+      return promises;
     },
   },
 
@@ -50,9 +59,11 @@ const resolvers = {
 
   Playlist: {
     songs: parentValue => {
-      return axios
-        .get(`/playlists/${parentValue.id}/songs`)
-        .then(res => res.data);
+      const promises = parentValue.songIds.map(id =>
+        axios.get(`/songs/${id}`).then(res => res.data)
+      );
+
+      return promises;
     },
   },
 };
@@ -60,7 +71,7 @@ const resolvers = {
 const SchemaDefinition = `
   schema {
     query: RootQuery
-  }  
+  }
 `;
 
 const schema = makeExecutableSchema({

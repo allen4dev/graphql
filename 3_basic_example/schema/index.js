@@ -15,6 +15,12 @@ const RootQuery = `
   }
 `;
 
+const Mutation = `
+  type Mutation {
+    createArtist(name: String!, description: String!): Artist
+  }
+`;
+
 const resolvers = {
   RootQuery: {
     getArtist: (_, { id }) => {
@@ -30,6 +36,12 @@ const resolvers = {
 
     getPlaylist: (_, { id }) => {
       return axios.get(`/playlists/${id}`).then(res => res.data);
+    },
+  },
+
+  Mutation: {
+    createArtist: (_, args) => {
+      return axios.post('/artists', args).then(res => res.data);
     },
   },
 
@@ -71,6 +83,7 @@ const resolvers = {
 const SchemaDefinition = `
   schema {
     query: RootQuery
+    mutation: Mutation
   }
 `;
 
@@ -78,6 +91,7 @@ const schema = makeExecutableSchema({
   typeDefs: [
     SchemaDefinition,
     RootQuery,
+    Mutation,
     Artist,
     ...Album,
     ...Song,

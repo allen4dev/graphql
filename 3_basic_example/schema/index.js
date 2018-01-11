@@ -34,11 +34,13 @@ const Mutation = `
     updateAlbum(id: Int!, name: String!): Album
     deleteAlbum(id: Int!): Album
     addAlbumSong(id: Int!, songId: Int!): Album
+    deleteAlbumSong(id: Int!, songId: Int!): Album
 
     createPlaylist(name: String!, songIds: [Int] = []): Playlist
     updatePlaylist(id: Int!, name: String!): Playlist
     deletePlaylist(id: Int!): Playlist
     addPlaylistSong(id: Int!, songId: Int!): Playlist
+    deletePlaylistSong(id: Int!, songId: Int!): Playlist
   }
 `;
 
@@ -122,6 +124,16 @@ const resolvers = {
             .then(res => res.data);
         });
     },
+    deleteAlbumSong: (_, { id, songId }) => {
+      return axios
+        .get(`/albums/${id}`)
+        .then(res => res.data)
+        .then(album => album.songIds.filter(itemId => itemId !== songId))
+        .then(newSongList =>
+          axios.patch(`/albums/${id}`, { songIds: newSongList })
+        )
+        .then(res => res.data);
+    },
 
     createPlaylist: (_, args) => {
       return axios.post('/playlists', args).then(res => res.data);
@@ -150,6 +162,16 @@ const resolvers = {
             })
             .then(res => res.data);
         });
+    },
+    deletePlaylistSong: (_, { id, songId }) => {
+      return axios
+        .get(`/playlists/${id}`)
+        .then(res => res.data)
+        .then(playlist => playlist.songIds.filter(itemId => itemId !== songId))
+        .then(newSongList =>
+          axios.patch(`/playlists/${id}`, { songIds: newSongList })
+        )
+        .then(res => res.data);
     },
   },
 

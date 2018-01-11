@@ -11,13 +11,23 @@
       "id": 1,
       "name": "Artist 1 album",
       "artistId": 1,
-      "songIds": [4, 5, 6]
+      "songIds": [1, 2, 3]
     }
   ],
   "songs": [
     {
       "id": 1,
-      "name": "Song name",
+      "name": "Song name 1",
+      "artistId": 1
+    },
+    {
+      "id": 2,
+      "name": "Song name 2",
+      "artistId": 1
+    },
+    {
+      "id": 3,
+      "name": "Song name 3",
       "artistId": 1
     }
   ],

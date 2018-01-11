@@ -17,6 +17,7 @@
   "songs": [
     {
       "id": 1,
+      "name": "Song name",
       "artistId": 1
     }
   ],

@@ -19,6 +19,7 @@ const Mutation = `
   type Mutation {
     createArtist(name: String!, description: String!): Artist
     createSong(name: String!, artistId: Int!): Song
+    createAlbum(name: String!, artistId: Int!, songIds: [Int] = []): Album
   }
 `;
 
@@ -48,6 +49,10 @@ const resolvers = {
     createSong: (_, args) => {
       return axios.post('/songs', args).then(res => res.data);
     },
+
+    createAlbum: (_, args) => {
+      return axios.post('/albums', args).then(res => res.data);
+    },
   },
 
   Album: {
@@ -58,6 +63,9 @@ const resolvers = {
     },
 
     songs: parentValue => {
+      // ToDo: a separate module or service should take care of this
+      if (parentValue.songs.length === 0) return null;
+
       const promises = parentValue.songIds.map(id =>
         axios.get(`/songs/${id}`).then(res => res.data)
       );
@@ -76,6 +84,9 @@ const resolvers = {
 
   Playlist: {
     songs: parentValue => {
+      // ToDo: a separate module or service should take care of this
+      if (parentValue.songs.length === 0) return null;
+
       const promises = parentValue.songIds.map(id =>
         axios.get(`/songs/${id}`).then(res => res.data)
       );

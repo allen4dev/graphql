@@ -6,7 +6,7 @@ const Album = `
     id: Int
     name: String
     artist: Artist
-    songs: [Album!]!
+    songs: [Album]!
   }
 `;
 // "songIds": [4, 5, 6]

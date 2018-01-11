@@ -4,7 +4,7 @@ const Playlist = `
   type Playlist {
     id: Int
     name: String
-    songs: [Song!]!
+    songs: [Song]!
   }
 `;
 

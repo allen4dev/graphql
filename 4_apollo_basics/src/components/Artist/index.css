@@ -1,0 +1,8 @@
+.Artist {
+  border: 2px solid black;
+  padding: 0.5em 1em;
+}
+
+.Artist:not(:last-child) {
+  margin-bottom: 1em;
+}

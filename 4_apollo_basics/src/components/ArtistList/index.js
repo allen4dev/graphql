@@ -5,7 +5,7 @@ import Artist from './../Artist/';
 const ArtistList = ({ artists }) => {
   return (
     <section className="ArtistList">
-      {artists.map((artist, i) => <Artist key={i} />)}
+      {artists.map(artist => <Artist key={artist.id} {...artist} />)}
     </section>
   );
 };

@@ -1,35 +1,14 @@
-import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import React from 'react';
+import { Route } from 'react-router-dom';
 
-import ArtistList from './components/ArtistList';
+import Home from './containers/Home';
 
-class App extends Component {
-  render() {
-    const { loading, error, allArtists } = this.props.data;
+const App = () => {
+  return (
+    <div className="App">
+      <Route path="/" component={Home} />
+    </div>
+  );
+};
 
-    if (loading) {
-      return <h1>Loading...</h1>;
-    } else if (error) {
-      return <pre>{JSON.stringify(error, undefined, 2)}</pre>;
-    }
-
-    return (
-      <div className="App">
-        <ArtistList artists={allArtists} />
-      </div>
-    );
-  }
-}
-
-const query = gql`
-  query AllArtists {
-    allArtists(perPage: 10) {
-      id
-      name
-      description
-    }
-  }
-`;
-
-export default graphql(query)(App);
+export default App;

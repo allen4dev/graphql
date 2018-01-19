@@ -1,8 +1,14 @@
 .Artist {
   border: 2px solid black;
-  padding: 0.5em 1em;
 }
 
 .Artist:not(:last-child) {
   margin-bottom: 1em;
+}
+
+.Artist-link {
+  color: black;
+  display: block;
+  padding: 0.5em 1em;
+  text-decoration: none;
 }

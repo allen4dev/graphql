@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import ArtistList from './../../components/ArtistList';
 
+import query from './../../queries/getArtists';
+
 class Home extends Component {
   render() {
-    const { loading, error, allArtists } = this.props.data;
+    const { loading, error, getArtists } = this.props.data;
 
     if (loading) {
       return <h1>Loading...</h1>;
@@ -18,20 +19,10 @@ class Home extends Component {
 
     return (
       <div className="Home">
-        <ArtistList artists={allArtists} />
+        <ArtistList artists={getArtists} />
       </div>
     );
   }
 }
-
-const query = gql`
-  query AllArtists {
-    allArtists(perPage: 10) {
-      id
-      name
-      description
-    }
-  }
-`;
 
 export default graphql(query)(Home);

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import uuid from 'uuid';
 
 import './index.css';
+
+import mutation from './../../mutations/createArtist';
+import query from './../../queries/getArtists';
 
 class CreateBar extends Component {
   state = {
@@ -28,6 +30,13 @@ class CreateBar extends Component {
           id: uuid(),
           name: this.state.name,
           description: this.state.description,
+        },
+        update: (store, { data: createArtist }) => {
+          const data = store.readQuery({ query });
+          // ToDo: Fix name
+          data.getArtists.unshift(createArtist.createArtist);
+
+          store.writeQuery({ query, data });
         },
       })
       .then(() => this.setState({ name: '', description: '' }));
@@ -61,15 +70,5 @@ class CreateBar extends Component {
     );
   }
 }
-
-const mutation = gql`
-  mutation CreateArtist($id: ID!, $name: String!, $description: String!) {
-    createArtist(id: $id, name: $name, description: $description) {
-      id
-      name
-      description
-    }
-  }
-`;
 
 export default graphql(mutation)(CreateBar);

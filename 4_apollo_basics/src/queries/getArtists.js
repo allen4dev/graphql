@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
-module.exports = gql`
-  query GetArtists() {
+export default gql`
+  query GetArtists {
     getArtists {
       id
       name

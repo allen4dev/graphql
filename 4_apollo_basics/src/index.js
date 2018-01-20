@@ -11,9 +11,13 @@ import App from './App';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
+const cache = new InMemoryCache({
+  dataIdFromObject: o => o.id,
+});
+
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://localhost:8080' }),
-  cache: new InMemoryCache(),
+  link: new HttpLink({ uri: 'http://localhost:8080/graphql' }),
+  cache,
 });
 
 ReactDOM.render(
@@ -22,6 +26,6 @@ ReactDOM.render(
       <App />
     </BrowserRouter>
   </ApolloProvider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 registerServiceWorker();

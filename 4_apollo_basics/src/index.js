@@ -5,6 +5,7 @@ import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { toIdValue } from 'apollo-utilities';
 
 import App from './App';
 
@@ -12,7 +13,12 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
 const cache = new InMemoryCache({
-  dataIdFromObject: o => o.id,
+  cacheResolvers: {
+    Query: {
+      getArtist: (_, { id }) =>
+        toIdValue(cache.config.dataIdFromObject({ __typename: 'Artist', id })),
+    },
+  },
 });
 
 const client = new ApolloClient({

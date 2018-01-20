@@ -8,14 +8,18 @@ const Playlist = require('./types/Playlist');
 
 const RootQuery = `
   type RootQuery {
+    getArtists: [Artist]!
     getArtist(id: Int!): Artist
     getArtistAlbums(id: Int!): [Album]!
     getArtistSongs(id: Int!): [Song]!
 
+    getAlbums: [Album]!
     getAlbum(id: Int!): Album
 
+    getSongs: [Song]!
     getSong(id: Int): Song
 
+    getPlaylists: [Playlist]!
     getPlaylist(id: Int): Playlist
   }
 `;
@@ -46,6 +50,9 @@ const Mutation = `
 
 const resolvers = {
   RootQuery: {
+    getArtists: () => {
+      return axios.get('/artists').then(res => res.data)
+    },
     getArtist: (_, { id }) => {
       return axios.get(`/artists/${id}`).then(res => res.data);
     },
@@ -56,14 +63,23 @@ const resolvers = {
       return axios.get(`/artists/${id}/songs`).then(res => res.data);
     },
 
+    getAlbums: () => {
+      return axios.get('/albums').then(res => res.data);
+    },
     getAlbum: (_, { id }) => {
       return axios.get(`/albums/${id}`).then(res => res.data);
     },
 
+    getSongs: () => {
+      return axios.get('/songs').then(res => res.data);
+    },
     getSong: (_, { id }) => {
       return axios.get(`/songs/${id}`).then(res => res.data);
     },
 
+    getPlaylists: () => {
+      return axios.get('/playlists').then(res => res.data);
+    },
     getPlaylist: (_, { id }) => {
       return axios.get(`/playlists/${id}`).then(res => res.data);
     },

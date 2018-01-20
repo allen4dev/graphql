@@ -12,7 +12,7 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://localhost:3000' }),
+  link: new HttpLink({ uri: 'http://localhost:8080' }),
   cache: new InMemoryCache(),
 });
 

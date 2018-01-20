@@ -5,14 +5,15 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
+    "start": "node index.js",
     "jsonserver": "json-server --watch db.json"
   },
   "keywords": [],
-  "author":
-    "Alan Aliaga <alanaliaga23@gmail.com> (https://twitter.com/kurocode)",
+  "author": "Alan Aliaga <alanaliaga23@gmail.com> (https://twitter.com/kurocode)",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.17.1",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-graphql": "^0.6.11",
     "graphql": "^0.12.3",

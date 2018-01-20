@@ -31,6 +31,15 @@ class CreateBar extends Component {
           name: this.state.name,
           description: this.state.description,
         },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          createArtist: {
+            __typename: 'Artist',
+            id: Math.round(Math.random() * -1000000),
+            name: this.state.name,
+            description: this.state.description,
+          },
+        },
         update: (store, { data: createArtist }) => {
           const data = store.readQuery({ query });
           // ToDo: Fix name

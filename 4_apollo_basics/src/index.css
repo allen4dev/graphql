@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+.optimistic {
+  background-color: #bada55;
+}
+
 .App {
   margin: 1em;
 }

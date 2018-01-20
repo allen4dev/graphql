@@ -1,11 +1,12 @@
 import gql from 'graphql-tag';
+import artistFields from './../fragments/artist';
 
 export default gql`
   query GetArtists {
     getArtists {
-      id
-      name
-      description
+      ...ArtistFields
     }
   }
+
+  ${artistFields}
 `;
